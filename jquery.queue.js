@@ -49,7 +49,9 @@
         tmp = _[ namespace ][ name ];
         
         i = 0, j = tmp.length;
-        // execute
+        
+        // !IMPORTANT use splice instead of delete, see the following link for the resaon
+        // http://stackoverflow.com/questions/500606/javascript-array-delete-elements
         for( ; i < j ; i++ ){
           if( tmp[ i ] === fn ){
             tmp.splice( i, 1 );
@@ -57,8 +59,8 @@
           }
         }
       }
-      // !IMPORTANT use splice instead of delete, see the following link for the resaon
-      // http://stackoverflow.com/questions/500606/javascript-array-delete-elements
+      // return self to enable chaining
+      return self;
     },
     
     'call' : function( name, args ){
