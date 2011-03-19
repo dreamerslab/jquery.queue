@@ -100,7 +100,7 @@
             // bind 'after click btn-b' queue functions to btn-b click event
             $( '&lt;div id="btn-b" class="btn"&gt;BUTTON B&lt;/div&gt;' ).bind( 'click', function(){
               
-              $.queue( 'execute', 'afterClickBtnB', $playground );
+              $.queue( 'call', 'afterClickBtnB', $playground );
             }).appendTo( $playground );
           }
         });
@@ -116,7 +116,7 @@
             // bind 'after click btn-c' queue functions to btn-c click event
              $( '&lt;div id="btn-c" class="btn"&gt;BUTTON C&lt;/div&gt;' ).bind( 'click', function(){
               
-              $.queue( 'execute', 'afterClickBtnC', $playground );
+              $.queue( 'call', 'afterClickBtnC', $playground );
             }).appendTo( $playground );
           }
         });
@@ -146,7 +146,7 @@
           // bind btn-a click event when DOM is ready
           $( '#btn-a' ).bind( 'click', function(){
             
-            $.queue( 'execute', 'afterClickBtnA', $( '#play-ground' ));
+            $.queue( 'call', 'afterClickBtnA', $( '#play-ground' ));
           });
         });
       </pre>

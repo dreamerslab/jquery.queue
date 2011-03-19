@@ -6,7 +6,7 @@ Make your Javascript application more flexible.
 
 Javascript is an [event-driven](http://bit.ly/ejhOOR) programming language. Therefore with heavy frontend applications your code is easy to have nested callbacks. And this make your code less flexible.
 
-With jQuery Queue plugin you can add functions in a queue outside the function scope; excute the queued functions later. It makes your code easily to be more modularize. It is a must have if you write heavy frontend websites.
+With jQuery Queue plugin you can add functions in a queue outside the function scope; execute the queued functions later. It makes your code easily to be more modularize. It is a must have if you write heavy frontend websites.
 
 ## Requires
   - jQuery 1.2.3+
@@ -35,10 +35,20 @@ With jQuery Queue plugin you can add functions in a queue outside the function s
     $.queue( 'add', 'queueName', function( arg1, arg2, arg3 ){
       // do something here
     });
+
+> remove function from a queue
     
-> execute queue functions
+    var someFunction = function( arg1, arg2, arg3 ){
+      // some code
+    }
     
-    $.queue( 'excute', 'queueName', [ arg1, arg2, arg3 ]);
+    $.queue( 'remove', 'queueName', 'someFunction' );
+        
+> call queue functions
+    
+    $.queue( 'call', 'queueName', [ arg1, arg2, arg3 ]);
+    // or
+    $.queue( 'call', 'queueName', arg );
 
 > clear queue
 
@@ -47,8 +57,7 @@ With jQuery Queue plugin you can add functions in a queue outside the function s
 
 #### Example code:
 
-> Store your data
-> here we use [$.secret](https://github.com/dreamerslab/jquery.secret) plaugin
+> Store your data, here we use [$.secret](https://github.com/dreamerslab/jquery.secret) plaugin
     
     // store data outside a ajax call
     $.queue( 'in', 'afterLoadPhotos', function( total, photos ){
@@ -77,7 +86,7 @@ With jQuery Queue plugin you can add functions in a queue outside the function s
       url : '/flickr/photos,
       dataType : 'json',
       success : function( rsp ){
-        $.queue( 'excute', 'afterLoadPhotos', [ rsp.total, rsp.photos ]);
+        $.queue( 'call', 'afterLoadPhotos', [ rsp.total, rsp.photos ]);
       }
     });
     
@@ -86,7 +95,8 @@ or inside the ajax call. Not only with ajax call, we can also use it to connect 
     
 
 ### Namespace
-`$.queue()` has 1 layer namespace support. With large application we might need to split our code into modules.
+`$.queue` supports 1 layer namespace. With large application we might need to split our code into modules.
+
 > Example code: 
     
     // push a function to getPhotos queue under FLICKR module
@@ -95,7 +105,7 @@ or inside the ajax call. Not only with ajax call, we can also use it to connect 
     });
     
     // another function for searching images on google
-    $.secret( 'in', 'GOOGLE.searchImage', function( args ){
+    $.queue( 'add', 'GOOGLE.searchImage', function( args ){
       // do other stuffs here
     }
 

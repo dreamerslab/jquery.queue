@@ -7,7 +7,7 @@ $.queue( 'add', 'afterClickBtnB', function( $playground ){
     // bind 'after click btn-c' queue functions to btn-c click event
     $( '<div id="btn-c" class="btn">BUTTON C</div>' ).bind( 'click', function(){
       
-      $.queue( 'execute', 'afterClickBtnC', $playground );
+      $.queue( 'call', 'afterClickBtnC', $playground );
     }).appendTo( $playground );
   }
 });

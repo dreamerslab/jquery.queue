@@ -41,16 +41,27 @@
     },
     
     // remove a function in a queue
-    withdraw : function( name, fn ){
+    remove : function( name, fn ){
+      var tmp, i, j;
       // make sure the calling queue exist, otherwise do nothing
       if( _[ namespace ] !== undefined && _[ namespace ][ name ] !== undefined ){
-
+        // cache to local var outside the loop
+        tmp = _[ namespace ][ name ];
+        
+        i = 0, j = tmp.length;
+        // execute
+        for( ; i < j ; i++ ){
+          if( tmp[ i ] === fn ){
+            tmp.splice( i, 1 );
+            break;
+          }
+        }
       }
-      // !IMPORTANT use splice install of delete, see the following link for the resaon
+      // !IMPORTANT use splice instead of delete, see the following link for the resaon
       // http://stackoverflow.com/questions/500606/javascript-array-delete-elements
     },
     
-    execute : function( name, args ){
+    'call' : function( name, args ){
       var tmp, _args, i, j;
       // make sure the calling queue exist, otherwise do nothing
       if( _[ namespace ] !== undefined && _[ namespace ][ name ] !== undefined ){
@@ -93,7 +104,7 @@
 
     // make sure user pass the second arg
     if( name === undefined || typeof( name ) !== 'string' ){
-      throw '$.secret error: second argument "name" is undefined or is not a string';
+      throw '$.secret error: on action "' + action + '" - second argument "' + name + '" is undefined or is not a string';
     }
     
     // !IMPORTANT, do not use 'var' here
@@ -115,7 +126,7 @@
       _name = name;
     }
 
-    // execute 'add', 'withdraw', 'execute' or 'clear' and return the result
+    // execute 'add', 'remove', 'call' or 'clear' and return the result
      return publicMethods[ action ]( _name, args );
   };
 
