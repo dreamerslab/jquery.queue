@@ -1,0 +1,181 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>jQuery Queue Plugin Demo</title>
+    <style type="text/css">
+      #wrap{
+        width: 600px;
+        margin: 0 auto 50px;
+      }
+      #info{
+        text-align: center;
+        margin: 50px 0 0;
+      }
+      #play-ground{
+        height: 100px;
+        margin: 0 auto;
+      }
+      .btn{
+        background: #cccccc;
+        float: left;
+        display: inline;
+        font-family: arial;
+        font-size: 12px;
+        font-weight: bolder;
+        padding: 3px 7px;
+        margin: 0 8px 0 0;
+        cursor: pointer;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div id="wrap">
+      <h1>
+        jQuery Queue Plugin Demo
+      </h1>
+      <p>
+        This demo shows how to build flexible Javascript application. 
+      </p>
+      <p>
+        In this demo we are going to build a really simple application to show how we can write more flexible code.
+      </p>
+      <p>
+        The functions of this app is really simple. 
+      </p>
+      <ul>
+        <li>When we click on BUTTON A, create a BUTTON B after BUTTON A</li>
+        <li>Now if we click on BUTTON B, create a BUTTON C after BUTTON B</li>
+        <li>Again click on BUTTON C, create a BUTTON CLEAER after BUTTON C</li>
+        <li>At last,click on BUTTON CLEAR to remove BUTTON B, C, and CLEAR</li>
+      </ul>
+      <p>The purpose of those functions is to bind events to dynamically created DOM elements. Without using this plugin your code would be nested like the following code.</p>
+      <pre>
+        $( function(){
+          var $playground = $( '#play-ground' );
+          
+          // bind btn-a click event when DOM is ready
+          $( '#btn-a' ).bind( 'click', function(){
+            
+            // only create btn-b in DOM if it does not exist
+            if( $( '#btn-b' ).length === 0 ){
+              
+              // bind 'after click btn-b' queue functions to btn-b click event
+              $( '&lt;div id="btn-b" class="btn"&gt;BUTTON B&lt;/div&gt;' ).bind( 'click', function(){
+                
+                // only create btn-c in DOM if it does not exist
+                if( $( '#btn-c' ).length === 0 ){
+                  
+                  // bind 'after click btn-c' queue functions to btn-c click event
+                   $( '&lt;div id="btn-c" class="btn"&gt;BUTTON C&lt;/div&gt;' ).bind( 'click', function(){
+                     
+                     // only create btn-clear in DOM if it does not exist
+                     if( $( '#btn-clear' ).length === 0 ){
+                       
+                       // remove btn-b, c and clear if the clear btn is clicked
+                       $( '&lt;div id="btn-clear" class="btn"&gt;CLEAR&lt;/div&gt;' ).bind( 'click', function(){
+                         
+                         $( '#btn-b' ).remove();
+                         $( '#btn-c' ).remove();
+                         $( '#btn-clear' ).remove();
+                       }).appendTo( $playground );
+                     }
+                  }).appendTo( $playground );
+                }
+              }).appendTo( $playground );
+            }
+          });
+        });
+      </pre>
+      <p>With jQuery.queue plugin we can separate code to modules and store each in different files like the following.</p>
+      <h3>Code in btn_a.js</h3>
+      <pre>
+        // push a function in 'after click btn-a' queue
+        $.queue( 'add', 'afterClickBtnA', function( $playground ){
+          
+          // only create btn-b in DOM if it does not exist
+          if( $( '#btn-b' ).length === 0 ){
+            
+            // bind 'after click btn-b' queue functions to btn-b click event
+            $( '&lt;div id="btn-b" class="btn"&gt;BUTTON B&lt;/div&gt;' ).bind( 'click', function(){
+              
+              $.queue( 'execute', 'afterClickBtnB', $playground );
+            }).appendTo( $playground );
+          }
+        });
+      </pre>
+      <h3>Code in btn_b.js</h3>
+      <pre>
+        // push a function in 'after click btn-b' queue
+        $.queue( 'add', 'afterClickBtnB', function( $playground ){
+          
+          // only create btn-c in DOM if it does not exist
+          if( $( '#btn-c' ).length === 0 ){
+            
+            // bind 'after click btn-c' queue functions to btn-c click event
+             $( '&lt;div id="btn-c" class="btn"&gt;BUTTON C&lt;/div&gt;' ).bind( 'click', function(){
+              
+              $.queue( 'execute', 'afterClickBtnC', $playground );
+            }).appendTo( $playground );
+          }
+        });
+      </pre>
+      <h3>Code in btn_c.js</h3>
+      <pre>
+        // push a function in 'after click btn-c' queue
+        $.queue( 'add', 'afterClickBtnC', function( $playground ){
+          
+          // only create btn-clear in DOM if it does not exist
+          if( $( '#btn-clear' ).length === 0 ){
+            
+            // remove btn-b, c and clear if the clear btn is clicked
+            $( '&lt;div id="btn-clear" class="btn"&gt;CLEAR&lt;/div&gt;' ).bind( 'click', function(){
+              
+              $( '#btn-b' ).remove();
+              $( '#btn-c' ).remove();
+              $( '#btn-clear' ).remove();
+            }).appendTo( $playground );
+          }
+        });
+      </pre>
+      <h3>Code in init.js</h3>
+      <pre>
+        $( function(){
+          
+          // bind btn-a click event when DOM is ready
+          $( '#btn-a' ).bind( 'click', function(){
+            
+            $.queue( 'execute', 'afterClickBtnA', $( '#play-ground' ));
+          });
+        });
+      </pre>
+      <p>Click the button to see how these code works.</p>
+      <div id="play-ground">
+        <div id="btn-a" class="btn">BUTTON A</div>
+      </div>
+      <h3 id="info">
+        Demo provides by <a href="http://dreamerslab.com/">DreamersLab</a>
+      </h3>
+    </div>
+    
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.0/jquery.min.js"></script>
+    <script type="text/javascript" src="../jquery.queue.js"></script>
+    <script type="text/javascript" src="btn_c.js"></script>
+    <script type="text/javascript" src="btn_b.js"></script>
+    <script type="text/javascript" src="btn_a.js"></script>
+    <script type="text/javascript" src="init.js"></script>
+    <script type="text/javascript" charset="utf-8">
+      // google analytics
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-20960410-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  </body>
+</html>
