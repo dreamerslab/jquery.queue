@@ -9,7 +9,7 @@ Javascript is an [event-driven](http://bit.ly/ejhOOR) programming language. Ther
 With jQuery Queue plugin you can add functions in a queue outside the function scope; execute the queued functions later. It makes your code easily to be more modularize. It is a must have if you write heavy frontend websites.
 
 ## Requires
-  - jQuery 1.2.3+
+  - jQuery 1.3.0+
 
 ## Browser Compatibility
   - [Firefox](http://mzl.la/RNaI) 2.0+
