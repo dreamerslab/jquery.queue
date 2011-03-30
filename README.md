@@ -30,7 +30,7 @@ With jQuery Queue plugin you can add functions in a queue outside the function s
 ## Usage
 
 #### Syntax
-> push function in a queue
+> push function to a queue
     
     $.queue( 'add', 'queueName', function( arg1, arg2, arg3 ){
       // do something here
@@ -57,7 +57,7 @@ With jQuery Queue plugin you can add functions in a queue outside the function s
 
 #### Example code:
 
-> Store your data, here we use [$.secret](https://github.com/dreamerslab/jquery.secret) plaugin
+> Store ajax call data , here we use [$.secret](https://github.com/dreamerslab/jquery.secret) plugin
     
     // store data outside a ajax call
     $.queue( 'in', 'afterLoadPhotos', function( total, photos ){
@@ -83,7 +83,7 @@ With jQuery Queue plugin you can add functions in a queue outside the function s
 
     $.ajax({
       type : 'get',
-      url : '/flickr/photos,
+      url : '/flickr/photos',
       dataType : 'json',
       success : function( rsp ){
         $.queue( 'call', 'afterLoadPhotos', [ rsp.total, rsp.photos ]);
