@@ -109,9 +109,14 @@ or inside the ajax call. Not only with ajax call, we can also use it to connect 
       // do other stuffs here
     }
 
-
 ## Demo
-See demo/index.html
+ - Please see demo/index.html
+ - Online version please take a look at [this](http://dreamerslab.com/demos/javascript-loose-coupling-with-jquery-queue-plugin)
+
+## Documentation
+  - There is a syntax highlight version, please see [this post](http://dreamerslab.com/blog/en/javascript-loose-coupling-with-jquery-queue-plugin/)
+  - For chinese version please go [here](http://dreamerslab.com/blog/tw/javascript-loose-coupling-with-jquery-queue-plugin/)
+
 
 ## License
 
