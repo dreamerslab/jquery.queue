@@ -1,7 +1,7 @@
 /*! Copyright 2011, Ben Lin (http://dreamerslab.com/)
 * Licensed under the MIT License (LICENSE.txt).
 *
-* Version: 1.0.0
+* Version: 1.0.1
 *
 * Requires: jQuery 1.3.0+
 */
@@ -11,16 +11,16 @@
   
   // self will be over written by jquery instance "this"
   // a higher scope let private mathods to access jquery obj
-  var self,
+  var self, namespace, _, publicMethods;
 
   // default namespace
-  namespace = 'trunk',
+  namespace = 'trunk';
 
   // private props
   _ = {
-    // default place to store secret data 
+    // default place to store queues
     trunk : {}
-  },
+  };
 
   publicMethods = {
 
@@ -48,7 +48,8 @@
         // cache to local var outside the loop
         tmp = _[ namespace ][ name ];
         
-        i = 0, j = tmp.length;
+        i = 0;
+        j = tmp.length;
         
         // !IMPORTANT use splice instead of delete, see the following link for the resaon
         // http://stackoverflow.com/questions/500606/javascript-array-delete-elements
@@ -72,7 +73,8 @@
         // make sure the args is an array
         _args = $.isArray( args ) ? args : [ args ];
         
-        i = 0, j = tmp.length;
+        i = 0;
+        j = tmp.length;
         // execute
         for( ; i < j ; i++ ){
           tmp[ i ].apply( this, _args );
@@ -84,7 +86,9 @@
 
     // clear queue
     clear : function( name ){
-      var found = false, prop;
+      var found, prop;
+      
+      found = false;
       // check if the name is a namespace
       for( prop in _ ){
         if( prop === name ){
@@ -106,7 +110,7 @@
 
     // make sure user pass the second arg
     if( name === undefined || typeof( name ) !== 'string' ){
-      throw '$.secret error: on action "' + action + '" - second argument "' + name + '" is undefined or is not a string';
+      throw '$.queue error: on action "' + action + '" - second argument "' + name + '" is undefined or is not a string';
     }
     
     // !IMPORTANT, do not use 'var' here

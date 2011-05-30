@@ -107,7 +107,7 @@ or inside the ajax call. Not only with ajax call, we can also use it to connect 
     // another function for searching images on google
     $.queue( 'add', 'GOOGLE.searchImage', function( args ){
       // do other stuffs here
-    }
+    }):
 
 ## Demo
  - Please see demo/index.html
