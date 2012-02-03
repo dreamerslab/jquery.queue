@@ -1,17 +1,17 @@
 {
-  "name": "queue",
-  "version": "1.0.2",
-  "title": "jQuery Queue Plugin",
-  "author": "dreamerslab <ben@dreamerslab.com>",
+  "name"    : "queue",
+  "version" : "1.0.2",
+  "title"   : "jQuery Queue Plugin",
+  "author"  : "dreamerslab <ben@dreamerslab.com>",
   "licenses": [{
     "type": "MIT",
-    "url": "LICENSE.txt"
+    "url" : "LICENSE.txt"
   }],
   "dependencies": {
     "jquery": ">=1.3.0"
   },
   "description": "Make your Javascript application more flexible.",
-  "keywords": [ 
+  "keywords": [
     "queue", "pub sub", "pubsub", "pub-sub", "event", "events", "module", "loose couple"
   ],
   "homepage": "http://dreamerslab.com/blog/javascript-loose-coupling-with-jquery-queue-plugin/"
